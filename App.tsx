@@ -71,9 +71,12 @@ const App: React.FC = () => {
   };
 
   const addPoints = (house: House, points: number, category: string, dept: Department, year: AcademicYear, studentName: string) => {
+    const trimmedName = studentName.trim();
+    if (!trimmedName) return;
+
     const log: PointLog = {
       id: Math.random().toString(36).substr(2, 9),
-      studentName,
+      studentName: trimmedName,
       house,
       points,
       category,
@@ -83,19 +86,31 @@ const App: React.FC = () => {
       type: points > 0 ? 'addition' : 'subtraction'
     };
 
-    setState(prev => ({
-      ...prev,
-      weeklyPoints: {
-        ...prev.weeklyPoints,
-        [house]: prev.weeklyPoints[house] + points
-      },
-      championshipPoints: {
-        ...prev.championshipPoints,
-        [house]: prev.championshipPoints[house] + points
-      },
-      history: [log, ...prev.history]
-    }));
-    toast.success(`Successfully recorded points for ${studentName}!`);
+    setState(prev => {
+      // Ensure the student name is saved to the department's list for future suggestions
+      const currentNames = prev.studentNames[dept] || [];
+      const updatedNames = currentNames.includes(trimmedName) 
+        ? currentNames 
+        : [...currentNames, trimmedName];
+
+      return {
+        ...prev,
+        weeklyPoints: {
+          ...prev.weeklyPoints,
+          [house]: prev.weeklyPoints[house] + points
+        },
+        championshipPoints: {
+          ...prev.championshipPoints,
+          [house]: prev.championshipPoints[house] + points
+        },
+        history: [log, ...prev.history],
+        studentNames: {
+          ...prev.studentNames,
+          [dept]: updatedNames
+        }
+      };
+    });
+    toast.success(`Successfully recorded points for ${trimmedName}!`);
   };
 
   const updateStudentNames = (dept: Department, names: string[]) => {

@@ -279,7 +279,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ state, onLogout, onManu
            <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] bg-white/5 px-4 py-1.5 rounded-full border border-white/5">Merit List</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(topStudentsPerDept).map(([dept, students]) => (
+          {/* Add comment above fix: Cast Object.entries result to ensure correct type inference for 'students' array */}
+          {(Object.entries(topStudentsPerDept) as [string, Array<{student: string, house: House, score: number}>][]).map(([dept, students]) => (
             <div key={dept} className="glass rounded-[2rem] p-6 border border-white/5 flex flex-col bg-white/5 hover:bg-white/[0.07] transition-all group overflow-hidden relative">
               <div className="absolute top-0 right-0 p-4 opacity-5 text-6xl font-black group-hover:scale-125 transition-transform">🏆</div>
               <h3 className="text-[10px] font-black text-indigo-400 uppercase tracking-widest border-b border-white/5 pb-3 mb-4">{dept}</h3>

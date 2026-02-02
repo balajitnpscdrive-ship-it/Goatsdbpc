@@ -11,12 +11,17 @@
     <style>
       body {
         font-family: 'Plus Jakarta Sans', sans-serif;
-        background: 
-          linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)),
+        margin: 0;
+        padding: 0;
+        background-color: #0f172a;
+        /* Balanced gradient overlay to allow the background image to shine through */
+        background-image: 
+          linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)),
           url('https://lh3.googleusercontent.com/d/1ZphFJGD2jgoB-7r1pGnrbp-S2LiajZeu');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        background-repeat: no-repeat;
         min-height: 100vh;
         color: white;
       }
@@ -46,6 +51,16 @@
       }
       input, select {
         color-scheme: dark;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
       }
     </style>
   <script type="importmap">
